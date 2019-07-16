@@ -29,3 +29,8 @@ services:
         class: App\Form\RegistrationFormType
         tags:
             - {name: form.type}
+    app.redirect_after_registration_subscriber:
+        class: App\EventListener\RedirectAfterRegistrationSubscriber
+        autowire: true
+        tags:
+            - { name: kernel.event_subscriber }

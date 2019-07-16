@@ -10,7 +10,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 
 
-class RegisterController extends Controller
+class HomepageController extends Controller
 {
     /**
      *
