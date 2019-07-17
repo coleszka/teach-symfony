@@ -8,9 +8,22 @@
     <title>Teach Symfony</title>
                     <!-- Bootstrap core CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <style>
 
+        .card-columns {
+        @include media-breakpoint-only(lg) {
+            column-count: 5;
+        }
+        @include media-breakpoint-only(xl) {
+            column-count: 5;
+        }
+        }
+
+    </style>
 
 </head>
+
+
 
 <body>
 
@@ -28,7 +41,7 @@
 {#                    </a>#}
 {#                </li>#}
                 <li class="nav-item">
-                    <a class="nav-link" href="#">My notes</a>
+                    <a class="nav-link" href="mynotes">My notes</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="new">Add note</a>
@@ -75,6 +88,8 @@
     {% block notregister %}
     {% endblock %}
     {% block new %}
+    {% endblock %}
+    {% block notes %}
     {% endblock %}
 
 </div>
