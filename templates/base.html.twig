@@ -41,10 +41,10 @@
 {#                    </a>#}
 {#                </li>#}
                 <li class="nav-item">
-                    <a class="nav-link" href="mynotes">My notes</a>
+                    <a class="nav-link" href="/teach-symfony/public/mynotes">My notes</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="new">Add note</a>
+                <li class="nav-item" style="background-color: limegreen; border-radius: 5px; color: white">
+                    <a class="nav-link" href="/teach-symfony/public/new">Add note</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="#">#</a>
@@ -78,19 +78,20 @@
         {% endfor %}
     {% endif %}
 
-    {% block test_title %}
+    {% block body %}
+        {% block fos_user_content %}
+        {% endblock fos_user_content %}
     {% endblock %}
-
-    {% block fos_user_content %}
-    {% endblock fos_user_content %}
-    {% block not_register %}
-    {% endblock %}
-    {% block notregister %}
-    {% endblock %}
-    {% block new %}
-    {% endblock %}
-    {% block notes %}
-    {% endblock %}
+{#    {% block test_title %}#}
+{#    {% endblock %}#}
+{#    {% block not_register %}#}
+{#    {% endblock %}#}
+{#    {% block notregister %}#}
+{#    {% endblock %}#}
+{#    {% block new %}#}
+{#    {% endblock %}#}
+{#    {% block notes %}#}
+{#    {% endblock %}#}
 
 </div>
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>

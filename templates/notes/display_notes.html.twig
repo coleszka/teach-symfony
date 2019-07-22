@@ -1,19 +1,18 @@
 {% extends "base.html.twig" %}
-{% block test_title %}
+
+
+
+{% block body %}
     <h2 style="margin:15px 0px 0px 0px">My notes</h2>
     <a href="new">
-    <button type="button" class="btn btn-success" style="margin-bottom: 10px">Add note</button>
-    </a>
-{% endblock %}
+    {#<button type="button" class="btn btn-success" style="margin-bottom: 10px">Add note</button>
+#}
+    <br></a>
 
-{% block notes %}
     {% if notes %}
-
-
-
         <div class="row">
             <div class="column" style="width: 20%">
-                <div class="card text-white mb-3" style="max-width: 18rem; background-color: red">
+                <div class="card text-white mb-3" style="max-width: 18rem; background-color: #8892BF">
                     <div class="card-header">PHP</div>
                 </div>
                 {% for note in notes|filter(note => note.category == 'php') %}
@@ -21,13 +20,17 @@
                         <div class="card-body">
                             <h5 class="card-title">{{ note.name }}</h5>
                             <p class="card-text">{{ note.description }}</p>
-                            <p class="card-text"><small class="text-muted">data</small></p>
+                            <p class="card-text"><small class="text-muted">data | {{ note.user.username }}
+                                | <a style="color: cornflowerblue" href="mynotes/edit/{{ note.id }}">edit</a> |
+                                    <a style="color: limegreen" href="mynotes/view/{{ note.id }}">view</a> |
+                                    <a style="color: red" href="/teach-symfony/public/mynotes/delete/{{ note.id }}">delete</a>
+                                </small></p>
                         </div>
                     </div>
                 {% endfor %}
             </div>
             <div class="column" style="width: 20%">
-                <div class="card text-white mb-3" style="max-width: 18rem; background-color: red">
+                <div class="card text-white mb-3" style="max-width: 18rem; background-color: #2074E7">
                     <div class="card-header">SQL</div>
                 </div>
                 {% for note in notes|filter(note => note.category == 'sql') %}
@@ -35,13 +38,17 @@
                         <div class="card-body">
                             <h5 class="card-title">{{ note.name }}</h5>
                             <p class="card-text">{{ note.description }}</p>
-                            <p class="card-text"><small class="text-muted">data</small></p>
+                            <p class="card-text"><small class="text-muted">data | {{ note.user.username }}
+                                    | <a style="color: cornflowerblue" href="mynotes/edit/{{ note.id }}">edit</a> |
+                                    <a style="color: limegreen" href="mynotes/view/{{ note.id }}">view</a> |
+                                    <a style="color: red" href="/teach-symfony/public/mynotes/delete/{{ note.id }}">delete</a>
+                                </small></p>
                         </div>
                     </div>
                 {% endfor %}
             </div>
             <div class="column" style="width: 20%">
-                <div class="card text-white mb-3" style="max-width: 18rem; background-color: red">
+                <div class="card text-white mb-3" style="max-width: 18rem; background-color: black; color: white;">
                     <div class="card-header">Symfony</div>
                 </div>
                 {% for note in notes|filter(note => note.category == 'symfony') %}
@@ -49,13 +56,17 @@
                         <div class="card-body">
                             <h5 class="card-title">{{ note.name }}</h5>
                             <p class="card-text">{{ note.description }}</p>
-                            <p class="card-text"><small class="text-muted">data</small></p>
+                            <p class="card-text"><small class="text-muted">data | {{ note.user.username }}
+                                    | <a style="color: cornflowerblue" href="mynotes/edit/{{ note.id }}">edit</a> |
+                                    <a style="color: limegreen" href="mynotes/view/{{ note.id }}">view</a> |
+                                    <a style="color: red" href="/teach-symfony/public/mynotes/delete/{{ note.id }}">delete</a>
+                                </small></p>
                         </div>
                     </div>
                 {% endfor %}
             </div>
             <div class="column" style="width: 20%">
-                <div class="card text-white mb-3" style="max-width: 18rem; background-color: red">
+                <div class="card text-white mb-3" style="max-width: 18rem; background-color: #00ACEE">
                     <div class="card-header">Windows</div>
                 </div>
                 {% for note in notes|filter(note => note.category == 'windows') %}
@@ -63,13 +74,17 @@
                         <div class="card-body">
                             <h5 class="card-title">{{ note.name }}</h5>
                             <p class="card-text">{{ note.description }}</p>
-                            <p class="card-text"><small class="text-muted">data</small></p>
+                            <p class="card-text"><small class="text-muted">data | {{ note.user.username }}
+                                    | <a style="color: cornflowerblue" href="mynotes/edit/{{ note.id }}">edit</a> |
+                                    <a style="color: limegreen" href="mynotes/view/{{ note.id }}">view</a> |
+                                    <a style="color: red" href="/teach-symfony/public/mynotes/delete/{{ note.id }}">delete</a>
+                                </small></p>
                         </div>
                     </div>
                 {% endfor %}
             </div>
             <div class="column" style="width: 20%">
-                <div class="card text-white mb-3" style="max-width: 18rem; background-color: red">
+                <div class="card text-white mb-3" style="max-width: 18rem; background-color: #DD4814">
                     <div class="card-header">Ubuntu</div>
                 </div>
                 {% for note in notes|filter(note => note.category == 'ubuntu') %}
@@ -77,7 +92,11 @@
                         <div class="card-body">
                             <h5 class="card-title">{{ note.name }}</h5>
                             <p class="card-text">{{ note.description }}</p>
-                            <p class="card-text"><small class="text-muted">data</small></p>
+                            <p class="card-text"><small class="text-muted">data | {{ note.user.username }}
+                                    | <a style="color: cornflowerblue" href="mynotes/edit/{{ note.id }}">edit</a> |
+                                    <a style="color: limegreen" href="mynotes/view/{{ note.id }}">view</a> |
+                                    <a style="color: red" href="/teach-symfony/public/mynotes/delete/{{ note.id }}">delete</a>
+                                </small></p>
                         </div>
                     </div>
                 {% endfor %}
