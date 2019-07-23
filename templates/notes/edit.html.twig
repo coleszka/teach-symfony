@@ -1,0 +1,12 @@
+{% extends "base.html.twig" %}
+{% block body %}
+    <h2 style="margin:15px 0px 15px 0px">Edit note</h2>
+    {% if app.user.id ==  userId   %}
+        {{ form(form) }}
+        {% else %}
+            <div class="alert alert-danger" role="alert">
+                This is not your note!
+            </div>
+    {% endif %}
+
+{% endblock %}

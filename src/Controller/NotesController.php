@@ -77,7 +77,8 @@ class NotesController extends AbstractController
     {
         $note = $this->getDoctrine()->getRepository(Notes::class)->find($id);
         //dump($note);
-        return $this->render('notes/view_note.html.twig', array('note' => $note));
+        return $this->render('notes/view_note.html.twig', array('note' => $note,
+            'userId' => $note->getUser()->getId()));
     }
 
     /**
@@ -94,6 +95,7 @@ class NotesController extends AbstractController
 
         $note = $this->getDoctrine()->getRepository(Notes::class)->find($id);
         //dump($note);
+        $userId = 1;
 //        $note->setName($note->getName());
 //        $note->setCreateDate($note->getCreateDate());
 //        $note->setUser($note->getUser());
@@ -142,8 +144,8 @@ class NotesController extends AbstractController
             return $this->redirectToRoute('viewNote', array('id' => $id));
         }
 
-        return $this->render('notes/new.html.twig', [
-            'form' => $form->createView(),
+        return $this->render('notes/edit.html.twig', [
+            'form' => $form->createView(), 'userId' => $note->getUser()->getId()
         ]);
     }
 
@@ -159,14 +161,21 @@ class NotesController extends AbstractController
         $em = $this->getDoctrine()->getManager();
         $note = $em->getRepository(Notes::class)->find($id);
 
-        $name = $note->getName();
+        if ($this->getUser()->getId() == $note->getUser()->getId())
+        {
+            $name = $note->getName();
 
-        $em->remove($note);
-        $em->flush();
+            $em->remove($note);
+            $em->flush();
 
-        $this->addFlash('message', 'Note: '.$name.', are deleted!');
-        return $this->redirectToRoute('my_notes');
-
+            $this->addFlash('message', 'Note: '.$name.', are deleted!');
+            return $this->redirectToRoute('my_notes');
+        }
+        else
+        {
+            $this->addFlash('warning', 'This is not your note!');
+            return $this->redirectToRoute('my_notes');
+        }
     }
 
 

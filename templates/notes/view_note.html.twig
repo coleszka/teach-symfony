@@ -3,6 +3,7 @@
 
 
 {% block body %}
+    {% if app.user.id ==  userId   %}
     <h2 style="margin:15px 0px 0px 0px"></h2>
     <a href="/teach-symfony/public/mynotes/edit/{{ note.id }}">
     <button type="button" class="btn btn-primary" style="margin-bottom: 10px">Edit note</button>
@@ -17,6 +18,10 @@
                     </small></p>
         </div>
     </div>
-
-
+    {% else %}
+        <br>
+        <div class="alert alert-danger" role="alert">
+            This is not your note!
+        </div>
+    {% endif %}
 {% endblock %}

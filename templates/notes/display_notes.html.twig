@@ -3,6 +3,18 @@
 
 
 {% block body %}
+
+    {% for message in app.flashes('warning') %}
+        <div class="alert alert-success">
+            {{ message }}
+        </div>
+    {% endfor %}
+    {% for message in app.flashes('message') %}
+        <div class="alert alert-success">
+            {{ message }}
+        </div>
+    {% endfor %}
+
     <h2 style="margin:15px 0px 0px 0px">My notes</h2>
     <a href="new">
     {#<button type="button" class="btn btn-success" style="margin-bottom: 10px">Add note</button>
