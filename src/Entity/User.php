@@ -35,10 +35,16 @@ class User extends BaseUser
      */
     private $notes;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Category", mappedBy="User")
+     */
+    private $category;
+
     public function __construct()
     {
         parent::__construct();
         $this->notes = new ArrayCollection();
+        $this->category = new ArrayCollection();
     }
 
     /**
@@ -82,6 +88,37 @@ class User extends BaseUser
             // set the owning side to null (unless already changed)
             if ($note->getUser() === $this) {
                 $note->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Category[]
+     */
+    public function getCategory(): Collection
+    {
+        return $this->category;
+    }
+
+    public function addCategory(Category $category): self
+    {
+        if (!$this->category->contains($category)) {
+            $this->category[] = $category;
+            $category->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCategory(Category $category): self
+    {
+        if ($this->category->contains($category)) {
+            $this->category->removeElement($category);
+            // set the owning side to null (unless already changed)
+            if ($category->getUser() === $this) {
+                $category->setUser(null);
             }
         }
 

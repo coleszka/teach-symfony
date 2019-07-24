@@ -14,7 +14,7 @@ class DisplayNotesController extends AbstractController
 {
     /**
      * @return Response
-     * @Route("/mynotes", name="my_notes")
+     * @Route("/my-notes", name="my_notes")
      *
      */
     public function displayNotes()

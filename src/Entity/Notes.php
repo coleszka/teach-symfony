@@ -37,7 +37,8 @@ class Notes
     private $last_edit_date;
 
     /**
-     * @ORM\Column(type="string", length=50)
+     * @ORM\ManyToOne(targetEntity="App\Entity\Category", inversedBy="category")
+     * @ORM\JoinColumn(nullable=false)
      */
     private $category;
 
@@ -46,6 +47,8 @@ class Notes
      * @ORM\JoinColumn(nullable=false)
      */
     private $user;
+
+
 
     public function getId(): ?int
     {
@@ -100,18 +103,6 @@ class Notes
         return $this;
     }
 
-    public function getCategory(): ?string
-    {
-        return $this->category;
-    }
-
-    public function setCategory(string $category): self
-    {
-        $this->category = $category;
-
-        return $this;
-    }
-
     public function getUser(): ?User
     {
         return $this->user;
@@ -120,6 +111,18 @@ class Notes
     public function setUser(?User $user): self
     {
         $this->user = $user;
+
+        return $this;
+    }
+
+    public function getCategory(): ?Category
+    {
+        return $this->category;
+    }
+
+    public function setCategory(?Category $category): self
+    {
+        $this->category = $category;
 
         return $this;
     }

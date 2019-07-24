@@ -4,6 +4,8 @@
 namespace App\Controller;
 
 use App\Entity\Notes;
+use App\Entity\Category;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -14,6 +16,8 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\Form\FormTypeInterface;
 use Symfony\Component\HttpFoundation\Response;
 use function Symfony\Component\Validator\Tests\Constraints\choice_callback;
+use Symfony\Component\Validator\Tests\Fixtures\Entity;
+
 
 
 class NotesController extends AbstractController
@@ -23,7 +27,7 @@ class NotesController extends AbstractController
      * @param Request $request
      * @return Response
      * @throws /Exception
-     * @Route("/new", name="new_note")
+     * @Route("/new-note", name="new_note")
      */
     public function new(Request $request)
     {
@@ -33,7 +37,9 @@ class NotesController extends AbstractController
         $note->setUser($user);
         $note->setCreateDate(new \DateTime('now'));
 
-
+        $category = new Category();
+        $category = $this->getDoctrine()->getRepository(Category::class)->findById(1);
+        //dump($category);
         $form = $this->createFormBuilder($note)
             ->add('name', TextType::class, ['required'   => true])
             ->add('description', TextareaType::class, [
@@ -42,14 +48,9 @@ class NotesController extends AbstractController
                     'rows' => 1,
                     'cols' => 30
                 ]])
-
-            ->add('category', ChoiceType::class, [
-                'choices' => [
-                    'PHP' => 'php',
-                    'SQL' => 'sql',
-                    'Symfony' => 'symfony',
-                    'Ubuntu' => 'ubuntu',
-                    'Windows' => 'windows',]])
+            ->add('category', EntityType::class, [
+                'class' => Category::class,
+                'choice_label' => 'name'])
             ->add('save', SubmitType::class, ['label' => 'Create Note'])
             ->getForm();
 
@@ -71,7 +72,7 @@ class NotesController extends AbstractController
 
     /**
      *
-     * @Route("/mynotes/view/{id}", name="viewNote")
+     * @Route("/my-notes/view/{id}", name="viewNote")
      */
     public function viewNote($id)
     {
@@ -84,7 +85,7 @@ class NotesController extends AbstractController
     /**
      * @param $id
      * @param Request $request
-     * @Route("/mynotes/edit/{id}", name="editNote")
+     * @Route("/my-notes/edit/{id}", name="editNote")
      * @return Response
      * @throws /Exception
      */
@@ -153,7 +154,7 @@ class NotesController extends AbstractController
      * @param Request $request
      * @param $id
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
-     * @Route ("mynotes/delete/{id}", name="delete_note")
+     * @Route ("my-notes/delete/{id}", name="delete_note")
      */
 
     public function deleteNote(Request $request, $id)
