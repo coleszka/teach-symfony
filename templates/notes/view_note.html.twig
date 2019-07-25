@@ -6,13 +6,13 @@
     {% if app.user.id ==  userId   %}
     <h2 style="margin:15px 0px 0px 0px"></h2>
     <a href="/teach-symfony/public/my-notes/edit/{{ note.id }}">
-    <button type="button" class="btn btn-primary" style="margin-bottom: 10px">Edit note</button>
+{#    <button type="button" class="btn btn-primary" style="margin-bottom: 10px">Edit note</button>#}
     </a>
     <div class="card">
         <div class="card-body">
             <h5 class="card-title">{{ note.name }}</h5>
             <p class="card-text">{{ note.description }}</p>
-            <p class="card-text"><small class="text-muted">{{ note.category }} | data | {{ note.user.username }} |
+            <p class="card-text"><small class="text-muted">{{ note.category.name }} | data | {{ note.user.username }} |
                     <a style="color: cornflowerblue" href="/teach-symfony/public/my-notes/edit/{{ note.id }}">edit</a> |
                     <a style="color: red" href="/teach-symfony/public/my-notes/delete/{{ note.id }}">delete</a>
                     </small></p>

@@ -39,8 +39,8 @@
                 <td class="col-md-1" style="; border-radius: 25px;">
                     <div style="background-color: {{ categories[i].color }}; border-radius: 3px; border: black 1px solid; color: white; padding: 7px;">{{ categories[i].color }}</div>
                 </td>
-                <td class="col-md-1"><button type="button" class="btn btn-primary">Edit</button></td>
-                <td class="col-md-1"><button type="button" class="btn btn-danger">Delete</button></td>
+                <td class="col-md-1"><a href="/teach-symfony/public/categories/edit/{{ categories[i].id }}"><button type="button" class="btn btn-primary">Edit</button></a></td>
+                <td class="col-md-1"><a href="/teach-symfony/public/categories/delete/{{ categories[i].id }}"><button type="button" class="btn btn-danger">Delete</button></a></td>
             </tr>
             {% endfor %}
             </tbody>

@@ -3,6 +3,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Category;
 use App\Entity\Notes;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -22,8 +23,12 @@ class DisplayNotesController extends AbstractController
         $notes = $this->getDoctrine()->getRepository(Notes::class)->findBy(
             ['user' => $this->getUser()]
         );
-        //dump($notes);
+        $categories = $this->getDoctrine()->getRepository(Category::class)->findBy(
+            ['User' => $this->getUser()]
+        );
+//        dump($notes);
+//        dump($categories);
         return $this->render('notes/display_notes.html.twig',
-            array('notes' => $notes));
+            array('notes' => $notes, 'categories' => $categories));
     }
 }

@@ -79,8 +79,15 @@ class NotesController extends AbstractController
     {
         $note = $this->getDoctrine()->getRepository(Notes::class)->find($id);
         //dump($note);
-        return $this->render('notes/view_note.html.twig', array('note' => $note,
+        if ($this->getUser()->getId() == $note->getUser()->getId()) {
+
+            return $this->render('notes/view_note.html.twig', array('note' => $note,
             'userId' => $note->getUser()->getId()));
+        }
+        else {
+            $this->addFlash('warning', 'This is not your note!');
+            return $this->redirectToRoute('my_notes');
+        }
     }
 
     /**
@@ -93,62 +100,54 @@ class NotesController extends AbstractController
 
     public function editNote($id, Request $request)
     {
-        $entityManager = $this->getDoctrine()->getManager();
 
         $note = $this->getDoctrine()->getRepository(Notes::class)->find($id);
         //dump($note);
-        $userId = 1;
-//        $note->setName($note->getName());
-//        $note->setCreateDate($note->getCreateDate());
-//        $note->setUser($note->getUser());
-        $note->setLastEditDate(new \DateTime('now'));
+        if ($this->getUser()->getId() == $note->getUser()->getId()) {
 
+            $note->setLastEditDate(new \DateTime('now'));
 
-//        $t = $note->getId();
-//        $note1 = new Notes();
-        $form = $this->createFormBuilder($note)
-            ->add('name', TextType::class, ['required'   => true, ])
-            ->add('description', TextareaType::class, [
-                'required'   => true,
-                'attr' => [
-                    'rows' => 1,
-                    'cols' => 30,
-                ]])
+            $form = $this->createFormBuilder($note)
+                ->add('name', TextType::class, ['required'   => true, ])
+                ->add('description', TextareaType::class, [
+                    'required'   => true,
+                    'attr' => [
+                        'rows' => 1,
+                        'cols' => 30,
+                    ]])
 
-            ->add('category', ChoiceType::class, [
-                'choices' => [
-                    'PHP' => 'php',
-                    'SQL' => 'sql',
-                    'Symfony' => 'symfony',
-                    'Ubuntu' => 'ubuntu',
-                    'Windows' => 'windows',]])
-            ->add('save', SubmitType::class, ['label' => 'Edit Note'])
-            ->getForm();
+                ->add('category', EntityType::class, [
+                    'class' => Category::class,
+                    'choice_label' => 'name'])
+                ->add('save', SubmitType::class, ['label' => 'Edit Note'])
+                ->getForm();
 
-        $form->handleRequest($request);
+            $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
+            if ($form->isSubmitted() && $form->isValid()) {
 
-            $name = $form['name']->getData();
-            $description = $form['description']->getData();
-            $category = $form['category']->getData();
+                $entityManager = $this->getDoctrine()->getManager();
 
-            $entityManager = $this->getDoctrine()->getManager();
+                $note->setName($form['name']->getData());
+                $note->setDescription($form['description']->getData());
+                $note->setCategory($form['category']->getData());
 
-            $note->setName($name);
-            $note->setDescription($description);
-            $note->setCategory($category);
+                $entityManager->persist($note);
+                $entityManager->flush();
 
-            $entityManager->persist($note);
-            $entityManager->flush();
+                $this->addFlash('message', 'Note are edited!');
+                return $this->redirectToRoute('viewNote', array('id' => $id));
+            }
 
-            $this->addFlash('message', 'Note are edited!');
-            return $this->redirectToRoute('viewNote', array('id' => $id));
+            return $this->render('notes/edit.html.twig', [
+                'form' => $form->createView(), 'userId' => $note->getUser()->getId()
+            ]);
+
         }
-
-        return $this->render('notes/edit.html.twig', [
-            'form' => $form->createView(), 'userId' => $note->getUser()->getId()
-        ]);
+        else {
+            $this->addFlash('warning', 'This is not your note!');
+            return $this->redirectToRoute('my_notes');
+        }
     }
 
     /**
@@ -158,27 +157,28 @@ class NotesController extends AbstractController
      * @Route ("my-notes/delete/{id}", name="delete_note")
      */
 
-    public function deleteNote(Request $request, $id)
+    public function deleteNote($id)
     {
-        $em = $this->getDoctrine()->getManager();
-        $note = $em->getRepository(Notes::class)->find($id);
 
-        if ($this->getUser()->getId() == $note->getUser()->getId())
-        {
-            $name = $note->getName();
+        $note = $this->getDoctrine()->getRepository(Notes::class)->find($id);
 
+        if ($this->getUser()->getId() == $note->getUser()->getId()) {
+
+            $em = $this->getDoctrine()->getManager();
             $em->remove($note);
             $em->flush();
+
+            $name = $note->getName();
 
             $this->addFlash('message', 'Note: '.$name.', are deleted!');
             return $this->redirectToRoute('my_notes');
         }
-        else
-        {
+        else {
             $this->addFlash('warning', 'This is not your note!');
             return $this->redirectToRoute('my_notes');
         }
     }
 
-
 }
+
+

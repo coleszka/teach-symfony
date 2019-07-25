@@ -26,5 +26,7 @@ security:
         - { path: ^/register, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/resetting, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/admin/, role: ROLE_ADMIN }
-        - { path: ^/new, role: ROLE_USER }
-        - { path: ^/mynotes, role: ROLE_USER }
+        - { path: ^/new-note, role: ROLE_USER }
+        - { path: ^/my-notes, role: ROLE_USER }
+        - { path: ^/categories, role: ROLE_USER }
+        - { path: ^/new-category, role: ROLE_USER }
