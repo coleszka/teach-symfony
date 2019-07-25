@@ -20,9 +20,7 @@ class DisplayNotesController extends AbstractController
     public function displayNotes()
     {
         $notes = $this->getDoctrine()->getRepository(Notes::class)->findBy(
-            [
-                'user' => $this->getUser(),
-                ]
+            ['user' => $this->getUser()]
         );
         //dump($notes);
         return $this->render('notes/display_notes.html.twig',

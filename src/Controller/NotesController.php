@@ -37,8 +37,8 @@ class NotesController extends AbstractController
         $note->setUser($user);
         $note->setCreateDate(new \DateTime('now'));
 
-        $category = new Category();
-        $category = $this->getDoctrine()->getRepository(Category::class)->findById(1);
+//        $category = new Category();
+//        $category = $this->getDoctrine()->getRepository(Category::class)->findById(1);
         //dump($category);
         $form = $this->createFormBuilder($note)
             ->add('name', TextType::class, ['required'   => true])
@@ -61,6 +61,7 @@ class NotesController extends AbstractController
             $entityManager->persist($note);
             $entityManager->flush();
 
+            $this->addFlash('success', 'Successful add note!');
             return $this->redirectToRoute('my_notes');
         }
 

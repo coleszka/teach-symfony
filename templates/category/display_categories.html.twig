@@ -1,0 +1,49 @@
+{% extends "base.html.twig" %}
+
+
+
+{% block body %}
+
+    {% for message in app.flashes('warning') %}
+        <div class="alert alert-success">
+            {{ message }}
+        </div>
+    {% endfor %}
+    {% for message in app.flashes('message') %}
+        <div class="alert alert-success">
+            {{ message }}
+        </div>
+    {% endfor %}
+
+    <h2 style="margin:15px 0px 0px 0px">My categories</h2>
+    <a href="new">
+    {#<button type="button" class="btn btn-success" style="margin-bottom: 10px">Add note</button>
+#}
+    <br></a>
+
+    {% if categories %}
+        <table class="table">
+            <thead>
+            <tr>
+                <th scope="col">Name</th>
+                <th scope="col">Description</th>
+                <th scope="col" style="text-align: center">Color</th>
+                <th scope="col"></th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for i in 0..categories|length-1 %}
+            <tr>
+                <th scope="row">{{ categories[i].name }}</th>
+                <td>{{ categories[i].description }}</td>
+                <td class="col-md-1" style="; border-radius: 25px;">
+                    <div style="background-color: {{ categories[i].color }}; border-radius: 3px; border: black 1px solid; color: white; padding: 7px;">{{ categories[i].color }}</div>
+                </td>
+                <td class="col-md-1"><button type="button" class="btn btn-primary">Edit</button></td>
+                <td class="col-md-1"><button type="button" class="btn btn-danger">Delete</button></td>
+            </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    {% endif %}
+{% endblock %}
